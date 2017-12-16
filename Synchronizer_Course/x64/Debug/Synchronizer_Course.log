@@ -1,2 +1,4 @@
-﻿  Synchronizer_Course.cpp
+﻿  Synchronizer.cpp
+c:\users\dante\source\repos\synchronizer_course\synchronizer_course\synchronizer.h(51): warning C4244: инициализация: преобразование "__int64" в "long", возможна потеря данных
+c:\users\dante\source\repos\synchronizer_course\synchronizer_course\synchronizer.cpp(38): warning C4244: инициализация: преобразование "__int64" в "int", возможна потеря данных
   Synchronizer_Course.vcxproj -> C:\Users\Dante\source\repos\Synchronizer_Course\x64\Debug\Synchronizer_Course.exe

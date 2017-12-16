@@ -12,7 +12,7 @@ Checking::~Checking()
 {
 }
 
-void Checking::Check(FileorDirectory& file, FileorDirectory& fileto)
+bool Checking::Check(FileorDirectory& file, FileorDirectory& fileto)
 {
 	_finddatai64_t in;
 	_finddatai64_t out;
@@ -24,13 +24,8 @@ void Checking::Check(FileorDirectory& file, FileorDirectory& fileto)
 		throw std::exception("Incorrect original file path trade");
 	out_file = _findfirsti64((fileto.getPath()).c_str(), &out);
 	if (!out_file)
-	{
-		Copying().FileCopy(file,fileto);
-		return;
-	}
+		return true;
 			if (in.size!=out.size)
-			{
-				Copying().FileCopy(file,fileto);
-				return;
-			}
+				return true;
+			return false;
 }

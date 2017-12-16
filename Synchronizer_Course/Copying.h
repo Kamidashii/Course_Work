@@ -9,20 +9,31 @@
 class FileorDirectory;
 class Copying
 {
+	long long Progress=0;//Copying progress in bytes
 public:
 	Copying();
 	~Copying();
-	 bool FileCopy(FileorDirectory&, FileorDirectory& pathto);
+	 bool FileCopy(FileorDirectory&, FileorDirectory& pathto,long long);
 	 void DirCopy(std::string path)
 	 {
 		 auto a=_mkdir(path.c_str());//Создает папку по указанному пути
-		 if (a)
+		 if (a&&errno!=17)
 		 {
-			 if (errno == 17)
-				 std::cout << "This directory already has" << std::endl;
-			 else
-				 std::cout << errno << std::endl;
+				 std::cout <<"Error number "<< errno << std::endl;
 		 }
 	 }
+	 long long CopyProgress(long long fullsize, long long work)
+	 {
+		 if (fullsize == 0)
+		 {
+			 std::cout << "Empty original file" << std::endl;
+			 return 0;
+		 }
+		 this->Progress += work;
+		 if (Progress == 0)
+			 return 0;
+		 return(Progress * 100 / fullsize);
+	 }
+	 
 };
 

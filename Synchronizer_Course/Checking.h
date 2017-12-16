@@ -12,7 +12,7 @@ class Checking
 public:
 	Checking();
 	~Checking();
-	void Check(FileorDirectory& file, FileorDirectory& fileto);
+	bool Check(FileorDirectory& file, FileorDirectory& fileto);
 };
 
 
