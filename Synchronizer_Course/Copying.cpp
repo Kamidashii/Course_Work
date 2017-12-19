@@ -18,7 +18,7 @@ bool Copying::FileCopy(FileorDirectory& path_in, FileorDirectory& path_out,long 
 	std::ifstream in(path_in.getPath(),std::ios::binary);
 	std::ofstream out(path_out.getPath(),std::ios::binary|std::ios::trunc);
 	if (!in||!out)
-		throw std::exception("Can't open file");
+		throw Err::ErrSyn("Can't open file");
 	do 
 	{
 		in.read(&buf[0], buf.size());

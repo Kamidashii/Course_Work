@@ -7,7 +7,9 @@ bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,
 	if (isFile(file))
 	{
 		fileto.path = fileto.path +"\\"+ file.getName();
-		Checking().Check(file, fileto);
+		std::cout << "Now copying " << file.getPath() << std::endl;
+		if (Checking().Check(file, fileto))
+			Copying ().FileCopy(file,fileto,DirSize);
 		return true;
 	}
 	intptr_t hFile = _findfirsti64((file.getPath() + "\\" + "*").c_str(), &data);
@@ -24,14 +26,30 @@ bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,
 			Synchronizer tmpto = (fileto.path + "\\" + data.name);
 			if (isDirectory(tmp))
 			{
-				Copying().DirCopy(tmpto.getPath());
+				std::cout << "Now copying " << tmp.getPath() << std::endl;
+				try
+				{
+					Copying().DirCopy(tmpto.getPath());
+				}
+				catch (Err::ErrSyn error)
+				{
+					std::cout << error.what() << errno << std::endl;
+				}
 				_Syn(tmp, tmpto,copyobj,percent);
 			}
 			else
 			{
 				if (Checking().Check(tmp, tmpto))
 				{
-					copyobj.FileCopy(tmp, tmpto,DirSize);
+					std::cout << "Now copying " << tmp.getPath() << std::endl;
+					try
+					{
+						copyobj.FileCopy(tmp, tmpto, DirSize);
+					}
+					catch (Err::ErrSyn error)
+					{
+						std::cout << error.what();
+					}
 				}
 				else
 				{
@@ -46,6 +64,7 @@ bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,
 		}
 
 	} while (_findnexti64(hFile, &data) == 0);
+	_findclose(hFile);
 	return true;
 }
 long long& Synchronizer::Fullsize(Synchronizer&file,long long& amount)
@@ -67,5 +86,6 @@ long long& Synchronizer::Fullsize(Synchronizer&file,long long& amount)
 				amount+=data.size;
 		}
 	} while (_findnexti64(hFile,&data)==0);
+	_findclose(hFile);
 	return amount;
 }

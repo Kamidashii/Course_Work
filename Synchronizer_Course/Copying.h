@@ -19,7 +19,7 @@ public:
 		 auto a=_mkdir(path.c_str());//Создает папку по указанному пути
 		 if (a&&errno!=17)
 		 {
-				 std::cout <<"Error number "<< errno << std::endl;
+			 throw Err::ErrSyn("Error remove directory ");
 		 }
 	 }
 	 long long CopyProgress(long long fullsize, long long work)

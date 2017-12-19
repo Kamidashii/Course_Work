@@ -20,12 +20,9 @@ bool Checking::Check(FileorDirectory& file, FileorDirectory& fileto)
 	intptr_t out_file;
 	in_file = _findfirsti64((file.getPath()).c_str(), &in);
 	out_file = _findfirsti64((fileto.getPath()).c_str(), &out);
-	if (in_file == -1)
-		throw std::exception("Incorrect original file path trade");
-	out_file = _findfirsti64((fileto.getPath()).c_str(), &out);
-	if (!out_file)
-		return true;
-			if (in.size!=out.size)
-				return true;
-			return false;
+	bool res = !out_file || in.size != out.size;
+	_findclose(in_file);
+	_findclose(out_file);
+	return res;
+
 }

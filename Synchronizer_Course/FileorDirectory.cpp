@@ -11,7 +11,7 @@ std::string FileorDirectory::list()
 	if (hFile == -1) return res;//Если данный файл не существует, возвращает пустой вектор
 	do {
 		if (strcmp(data.name, ".") == 0 || strcmp(data.name, "..") == 0)continue;//Исключает системные папки "." и ".."
-		res=(path + "\\" + data.name);//Добавляет в вектор полный путь к файлу 
+		res = (path + "\\" + data.name);//Добавляет в вектор полный путь к файлу 
 	} while (_findnexti64(hFile, &data) == 0);//Цикл идет пока не просканируются все файлы
 	return res;//Возвращает вектор с записанными в нем полными путями файлов
 }

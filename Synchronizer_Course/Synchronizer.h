@@ -17,6 +17,7 @@ class Synchronizer :
 			_finddatai64_t data;
 			intptr_t hFile = _findfirsti64((this->path).c_str(), &data);
 			this->DirSize = data.size;
+			_findclose(hFile);
 			return true;
 		}
 		else
@@ -25,17 +26,14 @@ class Synchronizer :
 protected:
 	long long DirSize=0;//Full size of original Directory or file
 public:
-	Synchronizer(std::string path):FileorDirectory(path)
-	{
-		
-	}
+	Synchronizer(std::string path):FileorDirectory(path){}
 	bool Syn(Synchronizer&fileto)
 	{
 		long long tmp = 0;
 		long long &linktmp=tmp;
 		if (!(Filesize(*this)))
 			Fullsize(*this,linktmp);
-		DirSize = linktmp;
+		this->DirSize = linktmp;
 		SizeHelper();
 		int percent = 0;
 		Copying copyobj;
@@ -48,16 +46,28 @@ public:
 	}
 	void SizeHelper()
 	{
-		long Understandble = DirSize / 1024 / 1024;
-		if (Understandble / 1024 > 1)
+		long double Understandble = DirSize;
+		if (Understandble > 1024)
 		{
 			Understandble /= 1024;
-			std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " GBytes" << std::endl;
+			if (Understandble > 1024)
+			{
+				Understandble /= 1024;
+				if (Understandble / 1024 > 1)
+				{
+					Understandble /= 1024;
+					std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " GBytes" << std::endl;
+				}
+				else
+				{
+					std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " MBytes" << std::endl;
+				}
+			}
+			else
+				std::cout<< "Synchronizing was started\n Full size of copying directory " << Understandble << " KBytes" << std::endl;
 		}
 		else
-		{
-			std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " MBytes" << std::endl;
-		}
+			std::cout<< "Synchronizing was started\n Full size of copying directory " << Understandble << " Bytes" << std::endl;
 	}
 };
 
