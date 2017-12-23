@@ -6,11 +6,11 @@
 #include"FileorDirectory.h"
 class ReDir
 {
-	void _Rerecurse(FileorDirectory&);
+	void _Rerecurse(FileorDirectory&);//private recurse directory remove metod
 public:
-	ReDir();
-	~ReDir();
-	void Rerecurse(FileorDirectory&syn)
+	ReDir()=default;
+	~ReDir()=default;
+	void Rerecurse(FileorDirectory&syn)//public recurse directory remove metod
 	{
 		_Rerecurse(syn);
 	}

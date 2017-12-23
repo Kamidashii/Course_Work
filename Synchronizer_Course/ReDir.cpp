@@ -1,15 +1,6 @@
 #include "stdafx.h"
 #include "ReDir.h"
 
-ReDir::ReDir()
-{
-}
-
-
-ReDir::~ReDir()
-{
-}
-
 void ReDir::_Rerecurse(FileorDirectory&syn)
 {
 	if (syn.isFile(syn))

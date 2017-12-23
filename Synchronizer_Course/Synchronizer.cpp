@@ -1,8 +1,62 @@
 #include "stdafx.h"
 #include "Synchronizer.h"
 
+bool Synchronizer::Syn(Synchronizer&fileto)
+{
+	long long tmp = 0;
+	long long &linktmp = tmp;
+	if (!(Filesize(*this)))
+		Fullsize(*this, linktmp);
+	this->DirSize = linktmp;
+	SizeHelper();
+	int percent = 0;
+	Copying copyobj;
+	if (this->path == fileto.path)
+	{
+		std::cout << "Copy path and original path are the same" << std::endl;
+		return true;
+	}
+	return _Syn(*this, fileto, copyobj, percent);
+}
+bool Synchronizer::Filesize(Synchronizer&)//file size metod
+{
+	if (isFile(*this))
+	{
+		_finddatai64_t data;
+		intptr_t hFile = _findfirsti64((this->path).c_str(), &data);
+		this->DirSize = data.size;
+		_findclose(hFile);
+		return true;
+	}
+	return false;
+}
+void Synchronizer::SizeHelper()
+{
+	long double Understandble = DirSize;
+	if (Understandble > 1024)
+	{
+		Understandble /= 1024;
+		if (Understandble > 1024)
+		{
+			Understandble /= 1024;
+			if (Understandble / 1024 > 1)
+			{
+				Understandble /= 1024;
+				std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " GBytes" << std::endl;
+			}
+			else
+			{
+				std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " MBytes" << std::endl;
+			}
+		}
+		else
+			std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " KBytes" << std::endl;
+	}
+	else
+		std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " Bytes" << std::endl;
+}
 bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,int percent)
-{// Метод для рекурсивного сканирования файлов каталога принимает ссылку на объект сканирования и объект записи
+{
 	_finddatai64_t data;
 	if (isFile(file))
 	{
@@ -18,7 +72,7 @@ bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,
 		std::cout << "Incorrect path to original file" << std::endl;
 		return false;
 	}
-	do //Проходит по всем файлам в данной папке
+	do 
 	{
 		if (strcmp(data.name, ".") != 0 && strcmp(data.name, "..") != 0)
 		{

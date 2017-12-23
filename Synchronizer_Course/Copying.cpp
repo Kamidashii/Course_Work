@@ -2,15 +2,6 @@
 #include "Copying.h"
 
 
-Copying::Copying()
-{
-}
-
-
-Copying::~Copying()
-{
-}
-
 bool Copying::FileCopy(FileorDirectory& path_in, FileorDirectory& path_out,long long DirSize)
 {
 	long long tmp = 0;

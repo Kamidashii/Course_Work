@@ -10,8 +10,8 @@ class FileorDirectory;
 class Checking
 {
 public:
-	Checking();
-	~Checking();
+	Checking()=default;
+	~Checking()=default;
 	bool Check(FileorDirectory& file, FileorDirectory& fileto);
 };
 

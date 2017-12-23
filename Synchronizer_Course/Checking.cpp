@@ -3,15 +3,6 @@
 #include "Checking.h"
 
 
-Checking::Checking()
-{
-}
-
-
-Checking::~Checking()
-{
-}
-
 bool Checking::Check(FileorDirectory& file, FileorDirectory& fileto)
 {
 	_finddatai64_t in;

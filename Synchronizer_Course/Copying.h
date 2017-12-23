@@ -11,18 +11,18 @@ class Copying
 {
 	long long Progress=0;//Copying progress in bytes
 public:
-	Copying();
-	~Copying();
-	 bool FileCopy(FileorDirectory&, FileorDirectory& pathto,long long);
-	 void DirCopy(std::string path)
+	Copying()=default;
+	~Copying()=default;
+	 bool FileCopy(FileorDirectory&, FileorDirectory& pathto,long long);//file directory metod
+	 void DirCopy(std::string path)//directory copying metod 
 	 {
-		 auto a=_mkdir(path.c_str());//Создает папку по указанному пути
+		 auto a=_mkdir(path.c_str());
 		 if (a&&errno!=17)
 		 {
 			 throw Err::ErrSyn("Error remove directory ");
 		 }
 	 }
-	 long long CopyProgress(long long fullsize, long long work)
+	 long long CopyProgress(long long fullsize, long long work)//conside copying progress in percents metod
 	 {
 		 if (fullsize == 0)
 		 {
