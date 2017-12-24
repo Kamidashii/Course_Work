@@ -11,12 +11,12 @@ public:
 	std::string Sync()
 	{
 		file.Syn(fileto);
-		return "\nSynchronize was finished";
+		return "\n\nSynchronizing was finished\n";
 	}
 	std::string Del()
 	{
 		ReDir().Rerecurse(fileto);//recurse directory remove metod
-		return "Copy dorectory remove was finished";
+		return "\nCopy dorectory remove was finished";
 	}
 	std::string SetPath();//set new path metod
 	std::string SeePaths()
