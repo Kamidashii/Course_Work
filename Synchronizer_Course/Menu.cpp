@@ -9,13 +9,11 @@ Menu::Menu(std::string path,std::string pathto)
 }
 
 
-Menu::~Menu()
-{
-}
+Menu::~Menu(){}
 std::string Menu::SetPath()
 {
 	std::string path, pathto;
-	std::cout << "Enter path and new path" << std::endl;
+	std::cout << "Enter new original path and new copy path" << std::endl;
 	std::cin.ignore();
 	std::getline(std::cin, path);
 	std::getline(std::cin, pathto);

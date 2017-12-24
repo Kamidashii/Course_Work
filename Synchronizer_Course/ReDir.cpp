@@ -12,7 +12,7 @@ void ReDir::_Rerecurse(FileorDirectory&syn)
 	intptr_t hFile = _findfirsti64((syn.getPath()+"\\"+"*").c_str(), &data);
 	if (hFile == -1)
 	{
-		std::cout << "Empty directory" << std::endl;
+		std::cout << "Copy directory is empty! There is nothing to delete." << std::endl;
 		return;
 	}
 	do

@@ -11,7 +11,7 @@ public:
 	std::string Sync()
 	{
 		file.Syn(fileto);
-		return "Synchronize was finished";
+		return "\nSynchronize was finished";
 	}
 	std::string Del()
 	{
@@ -26,6 +26,14 @@ public:
 		return paths;
 	}
 	std::string Check();//return hint about exist paths
+	std::string GetPath()
+	{
+		return file.getPath();
+	}
+	std::string GetPathto()
+	{
+		return fileto.getPath();
+	}
 	std::string(Menu::*metod[4])() = { &Menu::Sync,&Menu::Del,&Menu::SetPath,&Menu::SeePaths };//menu metods pointers
 	std::string MenuSyn(int num)//Synchronizer menu
 	{

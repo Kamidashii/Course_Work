@@ -5,7 +5,6 @@ class FileorDirectory
 { 
 protected:
 	std::string path;//directory path
-	std::string list();
 public:
 	FileorDirectory() = default;
 	FileorDirectory(std::string path) :path(path) {}
