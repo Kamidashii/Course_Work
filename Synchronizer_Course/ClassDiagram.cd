@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Checking" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Checking.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Copying" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAgAAQAAAAAAAIAAAAAAAAAAAAAAAEAAAAACAAAA=</HashCode>
+      <FileName>Copying.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileorDirectory" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACgAIAAAAAoAAAgAAEAAAAAAA=</HashCode>
+      <FileName>FileorDirectory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAgAAABIAADAAAAAAAAAAAAqYAAABAAAAAAAAAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReDir" Collapsed="true">
+    <Position X="4.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAIAAAAAAEAAAAAAAAAAAE=</HashCode>
+      <FileName>ReDir.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synchronizer" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAIAAABIAAAAAAAQAAAABAIAAAAAAAAAA=</HashCode>
+      <FileName>Synchronizer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Err::ErrSyn" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>ErrSyn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

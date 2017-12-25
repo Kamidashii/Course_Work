@@ -69,7 +69,7 @@ bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,
 	intptr_t hFile = _findfirsti64((file.getPath() + "\\" + "*").c_str(), &data);
 	if (hFile == -1)
 	{
-		std::cout << "Incorrect path to original file" << std::endl;
+		throw Err::ErrSyn((file.getPath()).c_str());
 		return false;
 	}
 	do 
