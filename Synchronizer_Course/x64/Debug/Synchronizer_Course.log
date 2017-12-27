@@ -1,12 +1,2 @@
-﻿  stdafx.cpp
-  Synchronizer_Course.cpp
-  Synchronizer.cpp
-c:\users\dante\source\repos\course_work\synchronizer_course\synchronizer.cpp(35): warning C4244: инициализация: преобразование "__int64" в "long double", возможна потеря данных
-c:\users\dante\source\repos\course_work\synchronizer_course\synchronizer.cpp(110): warning C4244: инициализация: преобразование "__int64" в "int", возможна потеря данных
-  ReDir.cpp
-  Menu.cpp
-  FileorDirectory.cpp
-  Copying.cpp
-  Checking.cpp
-  Создание кода...
+﻿  Synchronizer_Course.cpp
   Synchronizer_Course.vcxproj -> C:\Users\Dante\source\repos\Course_Work\x64\Debug\Synchronizer_Course.exe

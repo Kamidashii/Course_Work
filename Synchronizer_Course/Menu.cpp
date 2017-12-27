@@ -2,14 +2,14 @@
 #include "Menu.h"
 
 
-Menu::Menu(std::string path,std::string pathto)
+Menu::Menu(std::string path, std::string pathto)
 {
 	this->file.SetPath(path);
 	this->fileto.SetPath(pathto);
 }
 
 
-Menu::~Menu(){}
+Menu::~Menu() {}
 std::string Menu::SetPath()
 {
 	std::string path, pathto;
@@ -23,26 +23,18 @@ std::string Menu::SetPath()
 }
 std::string Menu::Check()
 {
-	_finddatai64_t data;
-	_finddatai64_t datato;
-	intptr_t ptr = _findfirsti64((file.getPath()).c_str(), &data);
-	intptr_t ptrto = _findfirsti64((fileto.getPath()).c_str(), &datato);
-	if (ptr == -1 && ptrto == -1)
+	std::unique_ptr<Smart_Desc> ptr(new Smart_Desc(_findfirsti64((file.getPath()).c_str(), &file.GetData())));
+	std::unique_ptr<Smart_Desc> ptrto(new Smart_Desc(_findfirsti64((fileto.getPath()).c_str(), &fileto.GetData())));
+	if (!ptr && !ptrto)
 	{
-		_findclose(ptr);
-		_findclose(ptrto);
 		return "Both paths do not exist";
 	}
-	else if (ptr == -1)
+	else if (!ptr)
 	{
-		_findclose(ptr);
-		_findclose(ptrto);
 		return "Original path does not exist";
 	}
-	else if (ptrto == -1)
+	else if (!ptrto)
 	{
-		_findclose(ptr);
-		_findclose(ptrto);
 		return "Copy path does not exist";
 	}
 	else

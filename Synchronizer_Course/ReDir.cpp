@@ -8,18 +8,17 @@ void ReDir::_Rerecurse(FileorDirectory&syn)
 		remove((syn.getPath()).c_str());
 		return;
 	}
-	_finddatai64_t data;
-	intptr_t hFile = _findfirsti64((syn.getPath()+"\\"+"*").c_str(), &data);
-	if (hFile == -1)
+	std::unique_ptr<Smart_Desc>hFile(new Smart_Desc(_findfirsti64((syn.getPath() + "\\" + "*").c_str(), &syn.GetData())));
+	if (!hFile)
 	{
 		std::cout << "Copy directory is empty! There is nothing to delete." << std::endl;
 		return;
 	}
 	do
 	{
-		if (strcmp(data.name, "..")!=0 && strcmp(data.name, ".")!=0)
+		if (strcmp(syn.GetData().name, "..") != 0 && strcmp(syn.GetData().name, ".") != 0)
 		{
-			FileorDirectory tmp(syn.getPath() + "\\" + data.name);
+			FileorDirectory tmp(syn.getPath() + "\\" + syn.GetData().name);
 			if (tmp.isDirectory(tmp))
 			{
 				_Rerecurse(tmp);
@@ -33,22 +32,22 @@ void ReDir::_Rerecurse(FileorDirectory&syn)
 					std::cout << error.what() << errno << std::endl;
 				}
 			}
-			else 
+			else
 			{
 				std::cout << "Now remove " << tmp.getPath() << std::endl;
-				try 
-				{ 
-					if (remove(tmp.getPath().c_str())) 
+				try
+				{
+					if (remove(tmp.getPath().c_str()))
 						throw Err::ErrSyn("Error remove file ");
 				}
 				catch (Err::ErrSyn error)
 				{
-					std::cout<<error.what() << errno<<std::endl;
+					std::cout << error.what() << errno << std::endl;
 				}
 			}
 		}
-	} while (_findnexti64(hFile, &data) == 0);
-	_findclose(hFile);
+	} while (_findnexti64(*hFile, &syn.GetData()) == 0);
+	_findclose(*hFile);
 }
 
 

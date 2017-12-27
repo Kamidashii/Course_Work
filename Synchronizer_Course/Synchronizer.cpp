@@ -22,10 +22,8 @@ bool Synchronizer::Filesize(Synchronizer&)//file size metod
 {
 	if (isFile(*this))
 	{
-		_finddatai64_t data;
-		intptr_t hFile = _findfirsti64((this->path).c_str(), &data);
+		std::unique_ptr<Smart_Desc> hFile(new Smart_Desc(_findfirsti64((this->path).c_str(), &this->GetData())));
 		this->DirSize = data.size;
-		_findclose(hFile);
 		return true;
 	}
 	return false;
@@ -55,24 +53,24 @@ void Synchronizer::SizeHelper()
 	else
 		std::cout << "Synchronizing was started\n Full size of copying directory " << Understandble << " Bytes" << std::endl;
 }
-bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,int percent)
+bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto, Copying&copyobj, int percent)
 {
-	_finddatai64_t data;
 	if (isFile(file))
 	{
-		fileto.path = fileto.path +"\\"+ file.getName();
+		fileto.path = fileto.path + "\\" + file.getName();
 		std::cout << "Now copying " << file.getPath() << std::endl;
 		if (Checking().Check(file, fileto))
-			Copying ().FileCopy(file,fileto,DirSize);
+			Copying().FileCopy(file, fileto, DirSize);
 		return true;
 	}
-	intptr_t hFile = _findfirsti64((file.getPath() + "\\" + "*").c_str(), &data);
-	if (hFile == -1)
+	std::unique_ptr<Smart_Desc> hFile(new Smart_Desc(_findfirsti64((file.getPath() + "\\" + "*").c_str(), &file.GetData())));
+
+	if (!hFile)
 	{
 		throw Err::ErrSyn((file.getPath()).c_str());
 		return false;
 	}
-	do 
+	do
 	{
 		if (strcmp(data.name, ".") != 0 && strcmp(data.name, "..") != 0)
 		{
@@ -89,7 +87,7 @@ bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,
 				{
 					std::cout << error.what() << errno << std::endl;
 				}
-				_Syn(tmp, tmpto,copyobj,percent);
+				_Syn(tmp, tmpto, copyobj, percent);
 			}
 			else
 			{
@@ -108,38 +106,34 @@ bool Synchronizer::_Syn(Synchronizer &file, Synchronizer&fileto,Copying&copyobj,
 				else
 				{
 					int  work = copyobj.CopyProgress(DirSize, data.size);
-						if (percent != work)
-						{
-							std::cout << work << "%\r";
-							percent = work;
-						}
+					if (percent != work)
+					{
+						std::cout << work << "%\r";
+						percent = work;
+					}
 				}
 			}
 		}
 
-	} while (_findnexti64(hFile, &data) == 0);
-	_findclose(hFile);
+	} while (_findnexti64(*hFile, &data) == 0);
 	return true;
 }
-long long& Synchronizer::Fullsize(Synchronizer&file,long long& amount)
+long long Synchronizer::Fullsize(Synchronizer&file, long long& amount)
 {
-	_finddatai64_t data;
-	intptr_t hFile = _findfirsti64((file.path + "\\" + "*").c_str(), &data);
-	if (hFile == -1)
+	std::unique_ptr<Smart_Desc> hFile(new Smart_Desc(_findfirsti64((file.path + "\\" + "*").c_str(), &file.GetData())));
+	if (!*hFile)
 	{
 		return amount;
 	}
-	long long amounttmp = 0;
 	do
 	{
-		if (strcmp(data.name, ".") != 0 && strcmp(data.name, "..") != 0)
+		if (strcmp((file.data).name, ".") != 0 && strcmp((file.data).name, "..") != 0)
 		{
-			Synchronizer tmp = (file.path + "\\" + data.name);
+			Synchronizer tmp = (file.path + "\\" + (file.data).name);
 			if (isDirectory(tmp))
 				Fullsize(tmp, amount);
-				amount+=data.size;
+			amount += (file.data).size;
 		}
-	} while (_findnexti64(hFile,&data)==0);
-	_findclose(hFile);
+	} while (_findnexti64(*hFile, &file.GetData()) == 0);
 	return amount;
 }

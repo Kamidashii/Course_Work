@@ -1,49 +1,42 @@
 #pragma once
 #include"stdafx.h"
 #include"ErrSyn.h"
-class FileorDirectory 
-{ 
+#include"Smart_Desc.h"
+class FileorDirectory
+{
 protected:
 	std::string path;//directory path
+	_finddatai64_t data;
 public:
 	FileorDirectory() = default;
 	FileorDirectory(std::string path) :path(path) {}
 
 	bool isDirectory(FileorDirectory&file) const //checking, if it's directory return true
 	{
-		_finddatai64_t data;
-		intptr_t hFile = _findfirsti64((file.path).c_str(), &data);
-		if (hFile == -1)
+		std::unique_ptr<Smart_Desc> hFile(new Smart_Desc(_findfirsti64((file.path).c_str(), &file.GetData())));
+		if (!*hFile)
 		{
-			_findclose(hFile);
 			return false;
 		}
-		_findclose(hFile);
 		return data.attrib & _A_SUBDIR;
 	}
 	bool isFile(FileorDirectory&file) const //checking, if it's file return true
 	{
-		_finddatai64_t data;
-		intptr_t hFile = _findfirsti64((file.path).c_str(), &data);
-		if (hFile == -1)
+		std::unique_ptr<Smart_Desc> hFile(new Smart_Desc(_findfirsti64((file.path).c_str(), &file.GetData())));
+		if (!*hFile)
 		{
-			_findclose(hFile);
 			return false;
 		}
-		_findclose(hFile);
 		return !(data.attrib & _A_SUBDIR);
 	}
-	
-	std::string getName() const//get name metod
+
+	std::string getName() //get name metod
 	{
-		_finddatai64_t data;
-		intptr_t hFile = _findfirsti64((this->path).c_str(), &data);
-		if (hFile == -1)
+		std::unique_ptr<Smart_Desc> hFile(new Smart_Desc(_findfirsti64((this->path).c_str(), &this->GetData())));
+		if (!*hFile)
 		{
-			_findclose(hFile);
 			return false;
 		}
-		_findclose(hFile);
 		return data.name;
 	}
 	std::string getPath()//get path metod
@@ -53,6 +46,10 @@ public:
 	void SetPath(std::string path)//set path metod
 	{
 		this->path = path;
+	}
+	_finddatai64_t& GetData()
+	{
+		return this->data;
 	}
 };
 

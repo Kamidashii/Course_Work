@@ -2,11 +2,13 @@
 #include<string>
 #include"Synchronizer.h"
 #include"ReDir.h"
+#include"Smart_Desc.h"
+#include<memory>
 class Menu
 {
 	Synchronizer file, fileto;
 public:
-	Menu(std::string path,std::string pathto);
+	Menu(std::string path, std::string pathto);
 	~Menu();
 	std::string Sync()
 	{
