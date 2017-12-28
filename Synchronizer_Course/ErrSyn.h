@@ -1,6 +1,6 @@
 #pragma once
 #include<iostream>
-namespace Err
+namespace SynSpace
 {
 	class ErrSyn :public std::exception
 	{

@@ -1,28 +1,30 @@
 #include"stdafx.h"
 #include "Copying.h"
 
-
-bool Copying::FileCopy(FileorDirectory& path_in, FileorDirectory& path_out, long long DirSize)
+namespace SynSpace
 {
-	long long tmp = 0;
-	std::string buf(4096, '\0');
-	std::ifstream in(path_in.getPath(), std::ios::binary);
-	std::ofstream out(path_out.getPath(), std::ios::binary | std::ios::trunc);
-	if (!in || !out)
-		throw Err::ErrSyn("Can't open file");
-	do
+	bool Copying::FileCopy(const FileorDirectory& path_in, const FileorDirectory& path_out, long long DirSize)
 	{
-		in.read(&buf[0], buf.size());
-		buf.resize(in.gcount());
-		out.write(&buf[0], buf.size());
-		auto percent = CopyProgress(DirSize, buf.size());
-		if (percent != tmp)
+		long long tmp = 0;
+		std::string buf(4096, '\0');
+		std::ifstream in(path_in.GetPath(), std::ios::binary);
+		std::ofstream out(path_out.GetPath(), std::ios::binary | std::ios::trunc);
+		if (!in || !out)
+			throw SynSpace::ErrSyn("Can't open file");
+		do
 		{
-			std::cout << percent << "%\r";
-			tmp = percent;
-		}
-	} while (!in.eof());
-	in.close();
-	out.close();
-	return true;
+			in.read(&buf[0], buf.size());
+			if (!in.gcount())
+				break;
+
+			out.write(&buf[0], in.gcount());
+			auto percent = CopyProgress(DirSize, in.gcount());
+			if (percent != tmp)
+			{
+				std::cout << percent << "%\r";
+				tmp = percent;
+			}
+		} while (!in.eof());
+		return true;
+	}
 }

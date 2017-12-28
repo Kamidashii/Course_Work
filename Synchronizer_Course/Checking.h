@@ -8,13 +8,21 @@
 #include"Copying.h"
 #include"FileorDirectory.h"
 #include"Smart_Desc.h"
-class FileorDirectory;
-class Checking
+class SynSpace::FileorDirectory;
+namespace SynSpace
 {
-public:
-	Checking() = default;
-	~Checking() = default;
-	bool Check(FileorDirectory& file, FileorDirectory& fileto);
-};
+	class Checking
+	{
+		Checking(const Checking&) = delete;
+		Checking(Checking&) = delete;
+		Checking& operator =(const Checking&) = delete;
+		Checking& operator =(Checking&) = delete;
+	public:
+		Checking() = default;
+		~Checking() = default;
+		bool Check(FileorDirectory& file, FileorDirectory& fileto);
+	};
+}
+
 
 
